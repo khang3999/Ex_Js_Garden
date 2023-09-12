@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>EXEJS 10</title>
+
+<link href="public/css/styles.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div class="bg">
+        <img src="public/images/bg.png" width="1280">
+    </div>
+
+    <div id="cash">1800</div>
+
+    <div class="control">
+        <div id="f1" class="btn-f">
+            200
+        </div>
+        <div id="f2" class="btn-f">
+            300
+        </div>
+        <div id="f3" class="btn-f">
+            500
+        </div>
+        <div id="xeng" class="btn-f">
+        </div>
+    </div>
+
+    <div id="shelf-1">
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+    </div>
+
+    <div id="shelf-2">
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+
+        <div class="pot">
+            <img src="" class="flower">
+            <img src="public/images/plate.png" class="plate">
+        </div>
+    </div>
+
+    <div class="copyright">
+        &copy; 2023 FIT - TDC | Frontend 1
+    </div>
+
+    <script>
+        const items = document.querySelectorAll(".btn-f");
+        const pots = document.querySelectorAll('.pot');
+        const cast = document.querySelector('#cash');
+            
+        let a;
+        let price;
+        let border;
+        // Su kien click vao cac hat giong va xeng
+        items.forEach(element => {
+            element.addEventListener('click', function () {
+                a = element.getAttribute('id');
+                price = element.textContent;
+                
+                // Xu li 
+                if (border != null) {
+                    border.classList.remove('border');  
+                }
+                element.classList.add('border');
+                border = element;
+            })
+        });
+
+        // Click vao cac vi tri trong cay
+        pots.forEach(element => {
+            element.addEventListener('click', function () {
+                let fl = element.querySelector('.flower');
+                if (a != 'xeng' && (fl.getAttribute('class').includes('full')) == false && cast.textContent >= +price) {
+                    fl.setAttribute('src', 'public/images/'+ a + '.png');
+                    fl.classList.add('full', a);
+                    cast.textContent -= +price;               
+                } else if (a != 'xeng' && (fl.getAttribute('class').includes('full')) == false && cast.textContent < +price) {
+                    alert('Khong du tien');
+                } else if (a != 'xeng' && (fl.getAttribute('class').includes('full')) == true) {
+                    alert('Da ton tai cay khac');
+                }
+                else{
+                    fl.removeAttribute("src");
+                    let x = cast.textContent;
+                    if (fl.getAttribute('class').includes('f1')) {
+                        cast.textContent = +x + +200*0.8;
+                        fl.classList.remove('full', 'f1');
+                    }
+                    else if (fl.getAttribute('class').includes('f2')) {
+                        cast.textContent = +x + +300*0.8;
+                        fl.classList.remove('full', 'f2');
+
+                    }
+                    else if (fl.getAttribute('class').includes('f3')) {
+                        cast.textContent = +x + +500*0.8;
+                        fl.classList.remove('full', 'f3');                 
+                    }
+                }   
+            })
+        });
+
+    </script>
+</body>
+</html>
